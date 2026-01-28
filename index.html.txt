@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Bir Mektup</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #ffd6e8, #fcbad3);
+    font-family: 'Playfair Display', serif;
+    color: #6b2b4a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Ana mektup */
+.container {
+    max-width: 620px;
+    background: #fff0f6;
+    padding: 45px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255,105,180,0.45);
+    z-index: 2;
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.4rem;
+    margin-bottom: 25px;
+    color: #c2185b;
+}
+
+/* İlk yazı */
+.intro {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-style: italic;
+    line-height: 1.7;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.intro.show {
+    opacity: 1;
+}
+
+/* Mektuplar */
+.letter {
+    display: none;
+    opacity: 0;
+    font-style: italic;
+    line-height: 1.9;
+    margin-top: 22px;
+    transition: opacity 1.4s ease-in-out;
+}
+
+.letter.show {
+    display: block;
+    opacity: 1;
+}
+
+.final {
+    font-size: 1.3rem;
+    color: #ad1457;
+}
+
+/* Buton */
+button {
+    margin-top: 30px;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 30px;
+    background: #ff8fab;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255,105,180,0.4);
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    background: #ff5d8f;
+    transform: scale(1.05);
+}
+
+/* Emoji kalpler */
+.heart {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    animation: floatUp 3s ease-out forwards;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(0.7) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-60px) scale(1) rotate(15deg);
+    }
+    100% {
+        transform: translateY(-150px) scale(1.2) rotate(-10deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Sevgilim</h1>
+
+    <div class="intro show">
+        Sana söylemek istediğim bir şey var... 💌
+    </div>
+
+    <div class="letter">
+        Yanımda ve hayatımda bulunduğun için çok minnettarım.  
+        Sen olmasaydın yüzüm gülmezdi ve gülüşler bu kadar anlam kazanmazdı.
+    </div>
+
+    <div class="letter">
+        Asla yalnız değilsin. Hayatında diğer insanların konumlarını ve yerlerini bilmem ama  
+        ben kalmak için gereken tüm mücadeleyi veririm.  
+
+        Her sabah kalktığında ve akşam yatmak üzereyken günaydın ve iyi geceler diyebileceğin,  
+        derdini, sıkıntını ve mutluluğunu rahatça paylaşabileceğin,  
+        en önemlisi sana aşık birisi var.
+    </div>
+
+    <div class="letter final">
+        Hayatımda olduğun için çok mutluyum ve şanslıyım.  
+        Seni çok seviyorum.  
+
+        İyi ki varsın,  
+        bol bol öpüyorum bal dudaklarından 💋
+    </div>
+
+    <button onclick="nextLetter()">Mektubu Aç 💌</button>
+</div>
+
+<script>
+const letters = document.querySelectorAll(".letter");
+let index = 0;
+
+/* Kalp emojilerini oluştur */
+const heartEmojis = ["💖","💗","💓","💞","💕","💘","💝"];
+
+function createHearts() {
+    for(let i=0;i<10;i++){ // 10 kalp
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        // rastgele kalp emoji
+        heart.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight - 50 + "px";
+        heart.style.fontSize = 16 + Math.random()*24 + "px"; // farklı boyutlar
+        heart.style.animationDuration = 2 + Math.random()*1.5 + "s"; // farklı hızlar
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),3000);
+    }
+}
+
+function nextLetter() {
+    if(index < letters.length){
+        letters[index].classList.add("show");
+        createHearts();
+        index++;
+    } else {
+        document.querySelector("button").disabled = true;
+    }
+}
+
+/* Sayfa açılır açılmaz da birkaç kalp yağabilir */
+for(let i=0;i<15;i++){
+    createHearts();
+}
+</script>
+
+</body>
+</html>
